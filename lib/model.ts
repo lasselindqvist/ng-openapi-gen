@@ -16,6 +16,8 @@ export class Model extends GenType {
   isSimple: boolean;
   isEnum: boolean;
   isObject: boolean;
+  isDate: boolean;
+  hasDate: boolean;
 
   // Simple properties
   simpleType: string;
@@ -37,6 +39,7 @@ export class Model extends GenType {
     this.tsComments = tsComments(description, 0, schema.deprecated);
 
     const type = schema.type || 'any';
+    const format = schema.format || 'any';
 
     // Handle enums
     if ((schema.enum || []).length > 0 && ['string', 'number', 'integer'].includes(type)) {
@@ -58,8 +61,9 @@ export class Model extends GenType {
 
     const hasAllOf = schema.allOf && schema.allOf.length > 0;
     const hasOneOf = schema.oneOf && schema.oneOf.length > 0;
+    this.isDate = (type === 'string' && format === 'date');
     this.isObject = (type === 'object' || !!schema.properties) && !schema.nullable && !hasAllOf && !hasOneOf;
-    this.isSimple = !this.isObject && !this.isEnum;
+    this.isSimple = !this.isDate && !this.isObject && !this.isEnum;
 
     if (this.isObject) {
       // Object
@@ -68,6 +72,7 @@ export class Model extends GenType {
       const sortedNames = [...propertiesByName.keys()];
       sortedNames.sort();
       this.properties = sortedNames.map(propName => propertiesByName.get(propName) as Property);
+      this.hasDate = this.properties.find(p => p.format === 'date') !== undefined;
     } else {
       // Simple / array / enum / union / intersection
       this.simpleType = tsType(schema, options, openApi);

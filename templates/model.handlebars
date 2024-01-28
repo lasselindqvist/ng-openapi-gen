@@ -2,7 +2,10 @@
 /* eslint-disable */
 {{#imports}}import { {{{typeName}}}{{#useAlias}} as {{{qualifiedName}}}{{/useAlias}} } from '{{{@root.pathToRoot}}}{{{fullPath}}}';
 {{/imports}}
+{{#hasDate}}import moment from 'moment';
+{{/hasDate}}
 {{{tsComments}}}{{#isObject}}{{>object}}{{/isObject
+}}{{#isDate}}{{>date}}{{/isDate
 }}{{#isEnum}}{{>enum}}{{/isEnum
 }}{{#isSimple}}{{>simple}}{{/isSimple
 }}

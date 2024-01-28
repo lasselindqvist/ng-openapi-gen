@@ -15,6 +15,10 @@ export class Globals {
   apiServiceFile?: string;
   requestBuilderClass: string;
   requestBuilderFile: string;
+  jsonParserClass: string;
+  jsonParserFile: string;
+  jsonInterceptorClass: string;
+  jsonInterceptorFile: string;
   responseClass: string;
   responseFile: string;
   moduleClass?: string;
@@ -29,6 +33,10 @@ export class Globals {
     this.configurationParams = `${this.configurationClass}Params`;
     this.baseServiceClass = options.baseService || 'BaseService';
     this.baseServiceFile = fileName(this.baseServiceClass);
+    this.jsonParserClass = 'CustomJsonParser';
+    this.jsonParserFile = fileName(this.jsonParserClass);
+    this.jsonInterceptorClass = 'CustomJsonInterceptor';
+    this.jsonInterceptorFile = fileName(this.jsonInterceptorClass);
     this.apiServiceClass = options.apiService || '';
     if (this.apiServiceClass === '') {
       this.apiServiceClass = undefined;

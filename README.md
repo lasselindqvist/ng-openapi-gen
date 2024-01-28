@@ -1,8 +1,10 @@
 ng-openapi-gen: An OpenAPI 3 code generator for Angular
 ---
 
-![Build status](https://github.com/cyclosproject/ng-openapi-gen/workflows/build/badge.svg)
-![Test status](https://github.com/cyclosproject/ng-openapi-gen/workflows/test/badge.svg)
+Note: Fork of https://github.com/cyclosproject/ng-openapi-gen
+
+![Build status](https://github.com/lasselindqvist/ng-openapi-gen/workflows/build/badge.svg)
+![Test status](https://github.com/lasselindqvist/ng-openapi-gen/workflows/test/badge.svg)
 
 This project is a NPM module that generates model interfaces and web service clients from an [OpenApi 3](https://www.openapis.org/) [specification](https://github.com/OAI/OpenAPI-Specification).
 The generated classes follow the principles of [Angular](https://angular.io/).
@@ -31,10 +33,7 @@ For a generator for [Swagger 2.0](https://github.com/OAI/OpenAPI-Specification/b
 - Only standard OpenAPI 3 descriptions will be generated. `ng-swagger-gen` allows several extensions, specially types from JSON schema, but they are out of scope for `ng-openapi-gen`. There is, however, support for a few [vendor extensions](#supported-vendor-extensions);
 - Servers per operation are not supported;
 - Only the first server is used as a default root URL in the configuration;
-- No data transformation is ever performed before sending / after returning data.
-  This means that a property of type `string` and format `date-time` will always be generated as `string`, not `Date`.
-  Otherwise every API call would need to have a processing that would traverse the returned object graph before sending the request
-  to replace all date properties by `Date`. The same applies to sent requests. Such operations are out of scope for `ng-openapi-gen`;
+- Currently only supports momentjs as the date library. Other libraries could be supported as well.
 
 ## Relationship with ng-swagger-gen
 
@@ -56,7 +55,7 @@ This is enabled by default. Inline enums are not, because it would require anoth
 You may want to install `ng-openapi-gen` globally or just on your project. Here is an example for a global setup:
 
 ```bash
-$ npm install -g ng-openapi-gen
+$ npm install -g ng-openapi-gen-with-dates
 $ ng-openapi-gen --input my-api.yaml --output my-app/src/app/api
 ```
 
@@ -373,10 +372,10 @@ components:
 
 ## Customizing templates
 
-You can customize the Handlebars templates by copying the desired files from the [templates](https://github.com/cyclosproject/ng-openapi-gen/tree/master/templates) folder (only the ones you need to customize) to some folder in your project, and then reference it in the configuration file.
+You can customize the Handlebars templates by copying the desired files from the [templates](https://github.com/lasse.lindqvist/ng-openapi-gen/tree/master/templates) folder (only the ones you need to customize) to some folder in your project, and then reference it in the configuration file.
 
 For example, to make objects extend a base interface, copy the 
-[object.handlebars](https://github.com/cyclosproject/ng-openapi-gen/tree/master/templates) file to your `src/templates` folder. 
+[object.handlebars](https://github.com/lasse.lindqvist/ng-openapi-gen/tree/master/templates) file to your `src/templates` folder. 
 Then, in `ng-openapi-gen.json` file, set the following: `"templates": "src/templates"`.
 Finally, the customized `src/templates/object.handlebars` would look like the following (based on the 0.17.2 version, subject to change in the future):
 

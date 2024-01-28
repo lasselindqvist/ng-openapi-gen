@@ -473,7 +473,7 @@ describe('Generation tests using all-types.json', () => {
     const ts = gen.templates.apply('model', audit);
     const parser = new TypescriptParser();
     parser.parseSource(ts).then(ast => {
-      expect(ast.imports.length).toBe(0);
+      expect(ast.imports.length).toBe(1);
       expect(ast.declarations.length).toBe(1);
       expect(ast.declarations[0]).toEqual(jasmine.any(InterfaceDeclaration));
       const decl = ast.declarations[0] as InterfaceDeclaration;

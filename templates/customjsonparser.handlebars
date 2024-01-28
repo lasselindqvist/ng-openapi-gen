@@ -1,0 +1,20 @@
+
+import { JsonParser } from './custom-json-interceptor';
+import { Injectable } from '@angular/core';
+import moment from 'moment';
+
+@Injectable()
+export class CustomJsonParser implements JsonParser {
+  parse(text: string): any {
+    return JSON.parse(text, dateReviver);
+  }
+}
+
+function dateReviver(key: string, value: any) {
+  if (typeof value == 'string' && (key === 'date' || key === 'time' || key.endsWith("Date") || key.endsWith("Time"))) {
+      if (moment.isMoment(value)) {
+        return moment(value);
+      }
+  }
+  return value;
+}

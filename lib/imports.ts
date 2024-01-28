@@ -1,6 +1,7 @@
 import { modelFile, qualifiedName, unqualifiedName } from './gen-utils';
 import { Importable } from './importable';
 import { Options } from './options';
+import moment from 'moment';
 
 /** A general import */
 export class Import implements Importable {
@@ -50,7 +51,9 @@ export class Imports {
    */
   add(param: string | Importable) {
     let imp: Import;
-    if (typeof param === 'string') {
+    if (moment.isMoment(param)) {
+      imp = new Import('moment', unqualifiedName('moment', this.options), qualifiedName('moment', this.options), '', 'moment');
+    } else if (typeof param === 'string') {
       // A model
       imp = new Import(param, unqualifiedName(param, this.options), qualifiedName(param, this.options), 'models/', modelFile(param, this.options));
     } else {

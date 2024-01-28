@@ -255,6 +255,11 @@ function rawTsType(schema: SchemaObject, options: Options, openApi: OpenAPIObjec
     }
   }
 
+  // A moment.Moment
+  if (type === 'string' && schema.format === 'date') {
+    return 'moment.Moment';
+  }
+
   // A Blob
   if (type === 'string' && schema.format === 'binary') {
     return 'Blob';

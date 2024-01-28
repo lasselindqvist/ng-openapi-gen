@@ -104,6 +104,8 @@ export class NgOpenApiGen {
       };
 
       // Generate the general files
+      this.write('customjsonparser', general, this.globals.jsonParserFile);
+      this.write('customjsoninterceptor', general, this.globals.jsonInterceptorFile);
       this.write('configuration', general, this.globals.configurationFile);
       this.write('response', general, this.globals.responseFile);
       this.write('requestBuilder', general, this.globals.requestBuilderFile);

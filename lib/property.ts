@@ -11,6 +11,7 @@ export class Property {
   identifier: string;
   tsComments: string;
   type: string;
+  format?: string
 
   constructor(
     public model: Model,
@@ -21,6 +22,7 @@ export class Property {
     openApi: OpenAPIObject) {
 
     this.type = tsType(this.schema, options, openApi, model);
+    this.format = (schema as SchemaObject).format || undefined;
     this.identifier = escapeId(this.name);
     const description = (schema as SchemaObject).description || '';
     this.tsComments = tsComments(description, 1, (schema as SchemaObject).deprecated);

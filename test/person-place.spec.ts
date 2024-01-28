@@ -88,7 +88,7 @@ describe('Generation tests using person-place.json', () => {
       const since = decl.properties.find(p => p.name === 'since');
       expect(since).withContext('since property').toBeDefined();
       if (since) {
-        expect(since.type).toBe('string');
+        expect(since.type).toBe('moment.Moment');
         // The parser doesn't hold comments
         expect(ts).toContain('* The date this place was assigned to the person');
       }
